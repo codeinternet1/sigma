@@ -14,12 +14,49 @@ const Login: React.FC = () => {
   const { setUser } = useAuth();
   const navigate = useNavigate();
 
+  // Dummy login data
+  const dummyUsers = [
+    {
+      id: 1,
+      username: "admin",
+      password: "admin123",
+      email: "admin@lirboyo.com",
+      role: "admin" as const,
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: 2,
+      username: "user",
+      password: "user123",
+      email: "user@lirboyo.com",
+      role: "user" as const,
+      createdAt: new Date().toISOString()
+    }
+  ];
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
+      // Check dummy login first
+      const dummyUser = dummyUsers.find(
+        user => user.username === username && user.password === password
+      );
+
+      if (dummyUser) {
+        // Simulate API response delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        const { password: _, ...userWithoutPassword } = dummyUser;
+        const token = `dummy-token-${dummyUser.id}-${Date.now()}`;
+        
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(userWithoutPassword));
+        setUser(userWithoutPassword);
+        navigate("/");
+        return;
+      }
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
       const res = await fetch(`${API_URL}/api/login`, {
@@ -171,6 +208,26 @@ Terima kasih.`;
           </button>
 
         </form>
+        {/* Dummy Login Info */}
+        <div className="mt-6 p-4 bg-blue-50 rounded-2xl border border-blue-100">
+          <h4 className="text-sm font-bold text-blue-800 mb-2">Demo Login</h4>
+          <div className="space-y-2 text-xs text-blue-700">
+            <div className="flex justify-between items-center p-2 bg-white rounded-lg">
+              <span className="font-medium">Admin:</span>
+              <div className="text-right">
+                <div>Username: <span className="font-bold">admin</span></div>
+                <div>Password: <span className="font-bold">admin123</span></div>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-2 bg-white rounded-lg">
+              <span className="font-medium">User:</span>
+              <div className="text-right">
+                <div>Username: <span className="font-bold">user</span></div>
+                <div>Password: <span className="font-bold">user123</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* 👇 NOTIFIKASI BANTUAN LOGIN (Update Baru) */}
         <div className="mt-8 pt-6 border-t border-gray-100">
