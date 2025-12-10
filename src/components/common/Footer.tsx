@@ -6,8 +6,8 @@ import {
   faXTwitter,
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
+
 const Footer: React.FC = () => {
-  // Data sosial media untuk memudahkan mapping dan styling
   const socials = [
     { 
       icon: faInstagram, 
@@ -38,13 +38,9 @@ const Footer: React.FC = () => {
   return (
     <footer className="w-full py-8 px-4 flex justify-center mt-12">
       <div className="w-full max-w-3xl">
-        {/* --- CONTAINER UTAMA (Gaya Kartu Melayang) --- */}
         <div className="bg-white rounded-[2rem] shadow-xl shadow-gray-100/50 border border-gray-100 p-8 text-center relative overflow-hidden">
-          
-          {/* Dekorasi Latar Belakang Halus */}
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-gray-200 to-transparent opacity-50"></div>
 
-          {/* --- SOCIAL MEDIA ICONS --- */}
           <div className="flex justify-center gap-4 mb-8">
             {socials.map((item, index) => (
               <a
@@ -62,10 +58,7 @@ const Footer: React.FC = () => {
             ))}
           </div>
 
-          {/* --- INFO & CONTACT --- */}
           <div className="flex flex-col items-center space-y-3">
-            
-            {/* Contact Badge (Pill Shape) */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-pink-50 border border-pink-100 rounded-full mb-2">
               <span className="w-2 h-2 bg-pink-400 rounded-full animate-pulse"></span>
               <p className="text-xs font-medium text-pink-700">
@@ -73,7 +66,6 @@ const Footer: React.FC = () => {
               </p>
             </div>
 
-            {/* Copyright */}
             <p className="text-sm text-gray-500 font-medium">
               © {new Date().getFullYear()} <span className="text-gray-800 font-bold">Rifki-Alaziz</span>. All rights reserved.
             </p>
@@ -82,7 +74,6 @@ const Footer: React.FC = () => {
               Developer FullStack
             </p>
           </div>
-
         </div>
       </div>
     </footer>

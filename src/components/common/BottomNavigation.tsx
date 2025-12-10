@@ -10,12 +10,11 @@ import {
   Calculator,
   Scale,
 } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const BottomNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const { logout } = useAuth();
 
   const [visible, setVisible] = useState(true);
@@ -25,7 +24,6 @@ const BottomNavigation = () => {
   const memberRef = useRef<HTMLDivElement>(null);
   const hisabRef = useRef<HTMLDivElement>(null);
 
-  /* Click outside dropdown logic */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (memberRef.current && !memberRef.current.contains(e.target as Node)) {
@@ -39,7 +37,6 @@ const BottomNavigation = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  /* Hide on scroll logic */
   useEffect(() => {
     let last = window.scrollY;
     const handleScroll = () => {
@@ -51,7 +48,6 @@ const BottomNavigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Logic active state
   const memberActive =
     location.pathname === "/students" || location.pathname === "/teachers";
 
@@ -60,7 +56,6 @@ const BottomNavigation = () => {
     location.pathname === "/zakat" ||
     location.pathname === "/waris";
 
-  // --- 3. FUNGSI LOGOUT ---
   const handleLogout = async () => {
     try {
       if (logout) await logout();
@@ -70,9 +65,6 @@ const BottomNavigation = () => {
     }
   };
 
-  /**
-   * STYLE HELPER
-   */
   const getNavItemStyle = (isActive: boolean) => {
     if (isActive) {
       return "bg-white text-[#202659] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-md transition-all duration-300";
@@ -80,7 +72,6 @@ const BottomNavigation = () => {
     return "text-gray-400 hover:text-white w-[45px] h-[45px] flex items-center justify-center transition-colors duration-300";
   };
 
-  // Style untuk Dropdown Menu (Aku sesuaikan warnanya biar matching sama Navbar)
   const dropdownMenuStyle = `
     absolute bottom-[70px] left-1/2 -translate-x-1/2
     bg-[#202659] border border-white/20
@@ -114,7 +105,6 @@ const BottomNavigation = () => {
           border border-white/10
         "
       >
-        {/* --- HOME --- */}
         <button
           onClick={() => navigate("/")}
           className={getNavItemStyle(location.pathname === "/")}
@@ -122,7 +112,6 @@ const BottomNavigation = () => {
           <Home size={22} strokeWidth={2.5} />
         </button>
 
-        {/* --- MEMBER DROPDOWN --- */}
         <div className="relative" ref={memberRef}>
           <button
             onClick={() => setMemberOpen((v) => !v)}
@@ -168,7 +157,6 @@ const BottomNavigation = () => {
           </AnimatePresence>
         </div>
 
-        {/* --- HISAB DROPDOWN --- */}
         <div className="relative" ref={hisabRef}>
           <button
             onClick={() => setHisabOpen((v) => !v)}
@@ -225,7 +213,6 @@ const BottomNavigation = () => {
           </AnimatePresence>
         </div>
 
-        {/* --- LOGOUT BUTTON --- */}
         <button
           onClick={handleLogout}
           className="text-gray-400 hover:text-red-400 w-[45px] h-[45px] flex items-center justify-center transition-colors duration-300"

@@ -2,17 +2,16 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import BottomNavigation from "./BottomNavigation";
 import { motion } from "framer-motion";
-import { User } from "lucide-react"; // Jangan lupa import icon User
-import { useAuth } from "../context/AuthContext"; // Pastiin ini path-nya bener ya
+import { User } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
-import bgPattern from "../assets/logo.png";
+import bgPattern from "../../assets/logo.png";
 
 type LayoutProps = {
   isPopup?: boolean;
   children?: React.ReactNode;
 };
 
-// --- KOMPONEN LANDSCAPE SVG ---
 const VectorLandscape = () => (
   <div className="absolute inset-x-0 bottom-0 z-0 w-full h-[60vh] pointer-events-none select-none">
     <svg
@@ -21,19 +20,16 @@ const VectorLandscape = () => (
       viewBox="0 0 1440 320"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Layer 1: Gunung Belakang */}
       <path
         fill="#48dbfb"
         fillOpacity="0.3"
         d="M0,160L48,176C96,192,192,224,288,224C384,224,480,192,576,165.3C672,139,768,117,864,128C960,139,1056,181,1152,197.3C1248,213,1344,203,1392,197.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
       ></path>
-      {/* Layer 2: Gunung Tengah */}
       <path
         fill="#1dd1a1"
         fillOpacity="0.5"
         d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
       ></path>
-      {/* Layer 3: Depan (Hijau Gelap ke Emas) */}
       <path
         fill="#0c6b58"
         fillOpacity="1"
@@ -43,7 +39,6 @@ const VectorLandscape = () => (
   </div>
 );
 
-// --- BUBBLE 3D ---
 const Bubble3D = ({ className, size, delay = 0, duration = 5 }: any) => (
   <motion.div
     initial={{ y: 0 }}
@@ -63,14 +58,11 @@ const Bubble3D = ({ className, size, delay = 0, duration = 5 }: any) => (
 
 const Layout = ({ isPopup = false, children }: LayoutProps) => {
   const navigate = useNavigate();
-  // Ambil data user dari context buat ditampilin namanya
   const { user } = useAuth(); 
 
   return (
     <div className="relative min-h-screen flex flex-col pb-16 text-white bg-gradient-to-b from-[#4facfe] via-[#1dd1a1] to-[#b8860b] transition-all duration-500 overflow-hidden font-sans">
-      {/* --- BACKGROUND LAYER --- */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        {/* Logo Watermark */}
         <div
           className="
             absolute 
@@ -124,11 +116,8 @@ const Layout = ({ isPopup = false, children }: LayoutProps) => {
         />
       </div>
 
-      {/* --- HERO / HEADER SECTION --- */}
       <div className="relative z-10 px-6 pt-10 pb-4 flex-shrink-0">
         <div className="flex justify-between items-start">
-          
-          {/* Kiri: Salam & Nama */}
           <div className="flex flex-col max-w-[75%]">
             <span className="text-yellow-200 text-xs font-semibold tracking-wider uppercase mb-1">
               Assalamualaikum
@@ -137,12 +126,10 @@ const Layout = ({ isPopup = false, children }: LayoutProps) => {
               Ahlan Wasahlan
             </h1>
             <p className="text-white/90 text-sm font-medium mt-1 truncate">
-              {/* Kalau user ada, tampilin namanya, kalau belum login/loading tampilin default */}
               {user?.username ? user.username : "Mutakhorijin ....."}
             </p>
           </div>
 
-          {/* Kanan: Profile Avatar Button */}
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => navigate("/profile")}
@@ -158,11 +145,9 @@ const Layout = ({ isPopup = false, children }: LayoutProps) => {
           >
             <User size={24} className="text-white drop-shadow-sm" />
           </motion.button>
-
         </div>
       </div>
 
-      {/* --- Main Content --- */}
       <main className="relative z-10 w-full max-w-5xl mx-auto px-4 flex-grow">
         {children ?? <Outlet />}
       </main>

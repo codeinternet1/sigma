@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Sparkles, BookOpen, Users, Loader2 } from "lucide-react";
 
-// Data Slide (Tetap sama)
 const SLIDES = [
   {
     id: 1,
@@ -35,17 +34,12 @@ const Onboarding: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
   const [direction, setDirection] = useState(0);
-  
-  // ✨ Tambahan: State Loading biar tombol responsif
   const [isLoading, setIsLoading] = useState(false);
 
-  // ✨ TEKNIK RAHASIA: Preload Halaman Login
-  // Ini akan download chunk Login page di background saat user baca onboarding
   useEffect(() => {
     const preloadLogin = async () => {
       try {
-        // Ganti path ini sesuai lokasi file Login page kamu
-        await import("../pages/Login"); 
+        await import("./Login"); 
         console.log("Login page preloaded");
       } catch (error) {
         console.error("Failed to preload login", error);
@@ -55,10 +49,9 @@ const Onboarding: React.FC = () => {
   }, []);
 
   const handleFinish = () => {
-    setIsLoading(true); // Kasih visual loading
+    setIsLoading(true);
     localStorage.setItem("hasSeenOnboarding", "true");
     
-    // Kasih sedikit delay visual (opsional) atau langsung gas
     setTimeout(() => {
         navigate("/login");
     }, 300);
@@ -73,7 +66,6 @@ const Onboarding: React.FC = () => {
     }
   };
 
-  // Variants animasi tetap sama
   const slideVariants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 300 : -300,
@@ -92,13 +84,11 @@ const Onboarding: React.FC = () => {
   return (
     <div className="min-h-screen relative overflow-hidden flex flex-col bg-white font-sans">
       
-      {/* Background Decor */}
       <div className={`absolute inset-0 transition-colors duration-700 ${SLIDES[currentIndex].bg}`}>
          <div className="absolute top-[-10%] right-[-10%] w-80 h-80 bg-white/40 rounded-full blur-3xl" />
          <div className="absolute bottom-[-10%] left-[-10%] w-80 h-80 bg-white/40 rounded-full blur-3xl" />
       </div>
 
-      {/* Tombol Skip */}
       <div className="relative z-10 flex justify-end p-6">
         {currentIndex < SLIDES.length - 1 && (
           <button
@@ -111,11 +101,9 @@ const Onboarding: React.FC = () => {
         )}
       </div>
 
-      {/* Konten Slide */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 relative z-10">
         <div className="w-full max-w-md relative h-[500px] flex flex-col items-center">
           
-          {/* Gambar */}
           <div className="relative w-full h-64 mb-8 flex items-center justify-center">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
@@ -143,7 +131,6 @@ const Onboarding: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Teks */}
           <div className="text-center h-40">
              <AnimatePresence mode="wait">
                 <motion.div
@@ -162,13 +149,10 @@ const Onboarding: React.FC = () => {
                 </motion.div>
              </AnimatePresence>
           </div>
-
         </div>
       </div>
 
-      {/* Kontrol Bawah */}
       <div className="relative z-10 p-8 flex flex-col items-center gap-8">
-        {/* Indikator */}
         <div className="flex gap-2">
           {SLIDES.map((_, idx) => (
             <motion.div
@@ -188,7 +172,6 @@ const Onboarding: React.FC = () => {
           ))}
         </div>
 
-        {/* Tombol Navigasi dengan Loading State */}
         <motion.button
           whileHover={{ scale: isLoading ? 1 : 1.05 }}
           whileTap={{ scale: isLoading ? 1 : 0.95 }}

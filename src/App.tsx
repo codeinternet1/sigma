@@ -8,11 +8,11 @@ import {
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 
 // ... (Imports Animation & Assets) ...
 import { AnimatePresence } from "framer-motion";
-import ScreenProtection from "./components/ScreenProtection";
+import ScreenProtection from "./components/common/ScreenProtection";
 
 // ... (Helper Lazy Load) ...
 const lazyLoad = (importPromise: Promise<any>) => lazy(() => importPromise);
@@ -20,10 +20,10 @@ const lazyLoad = (importPromise: Promise<any>) => lazy(() => importPromise);
 // ---------------------------------------------------------------------
 // 📦 LAZY LOADING COMPONENTS
 // ---------------------------------------------------------------------
-const Layout = lazyLoad(import("./components/Layout"));
-const Login = lazyLoad(import("./pages/Login"));
-const Onboarding = lazyLoad(import("./pages/Onboarding"));
-const Home = lazyLoad(import("./pages/Home"));
+const Layout = lazyLoad(import("./components/common/Layout"));
+const Login = lazyLoad(import("./pages/auth/Login"));
+const Onboarding = lazyLoad(import("./pages/auth/Onboarding"));
+const Home = lazyLoad(import("./pages/dashboard/Home"));
 
 // Students & Teachers
 const Students = lazyLoad(import("./pages/Students"));
