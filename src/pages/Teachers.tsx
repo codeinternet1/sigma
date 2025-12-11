@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Plus, Search, GraduationCap, MapPin } from 'lucide-react';
 import { Teacher } from '../types';
 import { useAuth } from '../context/AuthContext';
-import { getData } from '../api/api';
+import { getData } from '../services/api';
 
 const Teachers: React.FC = () => {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
